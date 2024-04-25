@@ -124,28 +124,6 @@ void FFileToolsModule::PluginButtonClicked()
 	FGlobalTabmanager::Get()->TryInvokeTab(FileToolsTabName);
 }
 
-void FFileToolsModule::OnOpenTool()
-{
-	if(!WindowCreated)
-	{
-		UFileSettings* ToolInstance = NewObject<UFileSettings>(GetTransientPackage(), UFileSettings::StaticClass());
-		ToolInstance->AddToRoot();
-
-		FPropertyEditorModule& PM = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
-
-		TArray<UObject*> ObjectsToView;
-		ObjectsToView.Add(ToolInstance);
-		TSharedRef<SWindow> Window = PM.CreateFloatingDetailsView(ObjectsToView, false);
-		Window->SetTitle(FText::FromString("File Tools"));
-		Window->SetOnWindowClosed(FOnWindowClosed::CreateRaw(this, &FFileToolsModule::ToolWindowClosed));
-		WindowCreated = true;
-	}
-}
-
-void FFileToolsModule::ToolWindowClosed(const TSharedRef<SWindow>&)
-{
-	WindowCreated = false;
-}
 
 
 void FFileToolsModule::RegisterMenus()

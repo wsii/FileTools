@@ -21,10 +21,7 @@ public:
 	
 	/** This function will be bound to Command (by default it will bring up plugin window) */
 	void PluginButtonClicked();
-	bool WindowCreated = false;
-	void OnOpenTool();
-	void ToolWindowClosed(const TSharedRef<SWindow>&);
-	void CreateFileDetailsView();
+
 private:
 
 	void RegisterMenus();
