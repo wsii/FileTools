@@ -100,6 +100,7 @@ TSharedRef<SDockTab> FFileToolsModule::OnSpawnPluginTab(const FSpawnTabArgs& Spa
 	
 	SettingsView = EditModule.CreateDetailView(DetailsViewArgs);
 	UFileSettings* ToolInstance = NewObject<UFileSettings>(GetTransientPackage(), UFileSettings::StaticClass());
+	ToolInstance->AddToRoot();//  prevents the object and all its descendants from being deleted during garbage collection.
 	SettingsView->SetObject(ToolInstance);
 	
 	return SNew(SDockTab)
