@@ -26,6 +26,9 @@ public class FileTools : ModuleRules
 			new string[]
 			{
 				"Core",
+				"JsonUtilities",
+				"Json",
+				"XmlParser"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

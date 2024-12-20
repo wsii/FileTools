@@ -7,7 +7,6 @@
 #include "FileSettings.h"
 #include "DetailWidgetRow.h"
 
-
 /**
  * 
  */
@@ -22,10 +21,5 @@ public:
 	TWeakObjectPtr<UFileSettings> FileSettings;
 
 	FReply PrintFileName() const;
-
-	bool CheckPath(FString path);
 	
-	FReply CreateFolder() ;
-	FReply DeleteFiles() ;
-	FReply MoveFiles() ;
 };

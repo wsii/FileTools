@@ -39,7 +39,7 @@ void FFileToolsModule::StartupModule()
 		.SetDisplayName(LOCTEXT("FFileToolsTabTitle", "FileTools"))
 		.SetMenuType(ETabSpawnerMenuType::Hidden);
 
-	//Register Custom Details for tool
+	//Register Custom Details for tool 自定义细节面板
 	FPropertyEditorModule& PM = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
 	PM.RegisterCustomClassLayout("FileSettings", FOnGetDetailCustomizationInstance::CreateStatic(FFileDetails::MakeInstance));
 	PM.NotifyCustomizationModuleChanged();
@@ -97,7 +97,8 @@ TSharedRef<SDockTab> FFileToolsModule::OnSpawnPluginTab(const FSpawnTabArgs& Spa
 	// 	StructureViewArgs.bShowClasses = true;
 	// 	StructureViewArgs.bShowInterfaces = true;
 	// }
-	
+
+	//设置细节面板的object
 	SettingsView = EditModule.CreateDetailView(DetailsViewArgs);
 	UFileSettings* ToolInstance = NewObject<UFileSettings>(GetTransientPackage(), UFileSettings::StaticClass());
 	ToolInstance->AddToRoot();//  prevents the object and all its descendants from being deleted during garbage collection.
