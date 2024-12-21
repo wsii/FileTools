@@ -63,6 +63,16 @@ FProjectPath UFileToolsBPLibrary::GetProjectDirectories()
 	return P;
 }
 
+bool UFileToolsBPLibrary::CheckPath(FString Path)
+{
+	bool const isSuccess = FPlatformFileManager::Get().GetPlatformFile().DirectoryExists(*Path);
+		if (!isSuccess)
+		{
+			auto Result = FMessageDialog::Open(EAppMsgType::Ok, FText::FromString(FString::Printf(TEXT("Path is Wrong"))));
+		}
+		return isSuccess;
+}
+
 bool UFileToolsBPLibrary::ReadText(FString Path, FString& Output)
 {
 	IPlatformFile& FileManager = FPlatformFileManager::Get().GetPlatformFile();

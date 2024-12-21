@@ -14,12 +14,12 @@ void FFileDetails::CustomizeDetails(IDetailLayoutBuilder& DetailBuilder)
 {
 	TArray<TWeakObjectPtr<UObject>> ObjectsBeingCustomized;
 	DetailBuilder.GetObjectsBeingCustomized(ObjectsBeingCustomized);
-	for (int32 ObjectIndex = 0; !FileSettings.IsValid() &&ObjectIndex < ObjectsBeingCustomized.Num(); ++ObjectIndex)
+	for (int32 ObjectIndex = 0; !ModiferSettings.IsValid() &&ObjectIndex < ObjectsBeingCustomized.Num(); ++ObjectIndex)
 	{
 		const TWeakObjectPtr<UObject>& CurrentObject = ObjectsBeingCustomized[ObjectIndex];
 		if (CurrentObject.IsValid())
 		{
-			FileSettings = Cast<UFileSettings>(CurrentObject.Get());
+			ModiferSettings = Cast<UModiferSettings>(CurrentObject.Get());
 		}
 	}
 	const FText FilterString = FText::FromString("File Tools");

@@ -1,12 +1,14 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "FileTools.h"
-#include "FileSettings.h"
+
+#include "DebugHeader.h"
 #include "FileDetails.h"
 #include "FileToolsStyle.h"
 #include "FileToolsCommands.h"
 
 #include "LevelEditor.h"
+#include "SFileToolsWidget.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Text/STextBlock.h"
@@ -40,10 +42,10 @@ void FFileToolsModule::StartupModule()
 		.SetMenuType(ETabSpawnerMenuType::Hidden);
 
 	//Register Custom Details for tool 自定义细节面板
-	FPropertyEditorModule& PM = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
-	PM.RegisterCustomClassLayout("FileSettings", FOnGetDetailCustomizationInstance::CreateStatic(FFileDetails::MakeInstance));
-	PM.NotifyCustomizationModuleChanged();
-	
+	// FPropertyEditorModule& PM = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
+	// PM.RegisterCustomClassLayout("ModiferSettings", FOnGetDetailCustomizationInstance::CreateStatic(FFileDetails::MakeInstance));
+	// PM.NotifyCustomizationModuleChanged();
+	//
 }
 
 void FFileToolsModule::ShutdownModule()
@@ -58,7 +60,7 @@ void FFileToolsModule::ShutdownModule()
 	FFileToolsStyle::Shutdown();
 	
 	FPropertyEditorModule& PM = FModuleManager::LoadModuleChecked<FPropertyEditorModule>("PropertyEditor");
-	PM.UnregisterCustomClassLayout("FileSettings");
+	PM.UnregisterCustomClassLayout("ModiferSettings");
 	
 	FFileToolsCommands::Unregister();
 
@@ -67,57 +69,12 @@ void FFileToolsModule::ShutdownModule()
 
 TSharedRef<SDockTab> FFileToolsModule::OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs)
 {
-	FText WidgetText = FText::Format(
-		LOCTEXT("WindowWidgetText", "Add code to {0} in {1} to override this window's contents"),
-		FText::FromString(TEXT("FFileToolsModule::OnSpawnPluginTab")),
-		FText::FromString(TEXT("FileTools.cpp"))
-		);
-	
-	// Create a property view
-	FPropertyEditorModule& EditModule = FModuleManager::Get().GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
-
-	FDetailsViewArgs DetailsViewArgs;
-	{
-		DetailsViewArgs.bAllowSearch = true;
-		DetailsViewArgs.bHideSelectionTip = true;
-		DetailsViewArgs.bLockable = false;
-		DetailsViewArgs.bSearchInitialKeyFocus = true;
-		DetailsViewArgs.bUpdatesFromSelection = false;
-		DetailsViewArgs.NotifyHook = nullptr;
-		DetailsViewArgs.bShowOptions = true;
-		DetailsViewArgs.bShowModifiedPropertiesOption = false;
-		DetailsViewArgs.bShowScrollBar = false;
-		DetailsViewArgs.bShowOptions = true;
-	}
-
-	// FStructureDetailsViewArgs StructureViewArgs;
-	// {
-	// 	StructureViewArgs.bShowObjects = true;
-	// 	StructureViewArgs.bShowAssets = true;
-	// 	StructureViewArgs.bShowClasses = true;
-	// 	StructureViewArgs.bShowInterfaces = true;
-	// }
-
-	//设置细节面板的object
-	SettingsView = EditModule.CreateDetailView(DetailsViewArgs);
-	UFileSettings* ToolInstance = NewObject<UFileSettings>(GetTransientPackage(), UFileSettings::StaticClass());
-	ToolInstance->AddToRoot();//  prevents the object and all its descendants from being deleted during garbage collection.
-	SettingsView->SetObject(ToolInstance);
 	
 	return SNew(SDockTab)
 		.TabRole(ETabRole::NomadTab)
 		[
 			// Put your tab content here!
-			SNew(SBox)
-			.HAlign(HAlign_Fill)
-			.VAlign(VAlign_Fill)
-			[
-				SNew(SScrollBox)
-				+SScrollBox::Slot()
-				[
-					SettingsView.ToSharedRef()
-				]
-			]
+			SNew(SFileToolsWidget)
 		];
 }
 
@@ -126,6 +83,10 @@ void FFileToolsModule::PluginButtonClicked()
 	FGlobalTabmanager::Get()->TryInvokeTab(FileToolsTabName);
 }
 
+void FFileToolsModule::Run()
+{
+	DebugHeader::ShowNotifyInfo(TEXT("Tab is launched"));
+}
 
 
 void FFileToolsModule::RegisterMenus()

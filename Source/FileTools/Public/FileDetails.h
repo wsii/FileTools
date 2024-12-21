@@ -4,8 +4,9 @@
 
 
 #include "IDetailCustomization.h"
-#include "FileSettings.h"
+
 #include "DetailWidgetRow.h"
+#include "FileToolsModifer.h"
 
 /**
  * 
@@ -18,7 +19,7 @@ public:
 	static TSharedRef<IDetailCustomization> MakeInstance();
 
 	//Ref to the current tool instance
-	TWeakObjectPtr<UFileSettings> FileSettings;
+	TWeakObjectPtr<UModiferSettings> ModiferSettings;
 
 	FReply PrintFileName() const;
 	

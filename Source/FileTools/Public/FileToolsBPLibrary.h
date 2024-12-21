@@ -112,6 +112,10 @@ public:
 	static FEnginePath GetEngineDirectories();
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "GetProjectDirectories", CompactNodeTitle = "ProjectDirs", Keywords = "File plugin path project directory", ToolTip = "Gets the project directories"), Category = "Path")
 	static FProjectPath GetProjectDirectories();
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "CheckPath", CompactNodeTitle = "CheckPath", Keywords = "Check directory", ToolTip = "Check directory"), Category = "Path")
+	static bool CheckPath(FString Path);
+
+	
 	/* Text file */
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "ReadTextFile", CompactNodeTitle = "ReadText", Keywords = "File plugin read text", ToolTip = "Read a standard text file"), Category = "File|Text")
 	static bool ReadText(FString Path, FString& Output);

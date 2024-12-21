@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FileSettings.h"
+#include "FileToolsModifer.h"
 #include "IDetailsView.h"
 #include "Modules/ModuleManager.h"
 #include "Widgets/SWindow.h"
@@ -22,6 +22,7 @@ public:
 	/** This function will be bound to Command (by default it will bring up plugin window) */
 	void PluginButtonClicked();
 
+	static void Run();
 private:
 
 	void RegisterMenus();
@@ -33,5 +34,5 @@ private:
 
 	// TSharedPtr<IStructureDetailsView> SettingsView;
 	TSharedPtr<IDetailsView> SettingsView;
-	TSharedPtr<UFileSettings> FileSetting;
+	TSharedPtr<UModiferSettings> ModiferSetting;
 };
